@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#050505">
+  <meta name="description" content="LUXORA — ساعات فاخرة بتصميم عصري وتجربة تسوق راقية.">
+  <title>LUXORA — Luxury Watches</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="noise"></div>
+  <div class="cursor-glow" id="cursorGlow"></div>
+
+  <header class="navbar" id="navbar">
+    <a class="brand" href="#home">LUXORA<span>®</span></a>
+    <nav id="mainNav">
+      <a href="#home">الرئيسية</a>
+      <a href="#collection">المجموعة</a>
+      <a href="#story">قصتنا</a>
+      <a href="#contact">تواصل</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="icon-btn search-toggle" id="searchToggle" aria-label="البحث">⌕</button>
+      <button class="cart" id="cartBtn" aria-label="فتح السلة">السلة <b id="cartCount">0</b></button>
+      <button class="menu-btn" id="menuBtn" aria-label="القائمة">☰</button>
+    </div>
+  </header>
+
+  <div class="search-panel" id="searchPanel">
+    <div class="search-inner">
+      <span>⌕</span>
+      <input id="searchInput" type="search" placeholder="ابحث عن ساعتك..." autocomplete="off">
+      <button id="closeSearch" aria-label="إغلاق">×</button>
+    </div>
+  </div>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-copy reveal">
+        <div class="eyebrow">LUXURY WATCHES / 2026</div>
+        <h1>الوقت،<br><em>بأناقة مختلفة.</em></h1>
+        <p>ساعة ليست مجرد وقت. اكتشف تفاصيل LUXORA، حيث تلتقي الهندسة الدقيقة مع التصميم الفاخر.</p>
+        <div class="hero-actions">
+          <a class="primary" href="#collection">اكتشف المجموعة <span>←</span></a>
+          <button class="ghost" id="explodeBtn">شاهد التفكيك</button>
+        </div>
+        <div class="trust-row"><span>✦ شحن سريع</span><span>✦ ضمان سنة</span><span>✦ دفع عند الاستلام</span></div>
+      </div>
+
+      <div class="watch-stage">
+        <video id="watchVideo" class="watch-video" autoplay muted loop playsinline preload="auto">
+          <source src="watch-disassembly.mp4" type="video/mp4">
+        </video>
+        <div class="video-vignette"></div>
+        <div class="video-controls">
+          <button class="replay" id="replayBtn">↻ إعادة الحركة</button>
+          <span class="video-status"><i></i> عرض حي</span>
+        </div>
+        <div class="stage-label">LUXORA / AUTOMATIC</div>
+      </div>
+      <div class="scroll-cue">SCROLL <span></span></div>
+    </section>
+
+    <section class="collection" id="collection">
+      <div class="section-heading reveal">
+        <div><div class="eyebrow">THE COLLECTION</div><h2>اختيارك يبدأ من هنا.</h2></div>
+        <p>ثلاثة تصاميم، شخصية واحدة: حضور فاخر لا يحتاج إلى شرح.</p>
+      </div>
+
+      <div class="shop-toolbar">
+        <div class="filter-pills" id="filterPills">
+          <button class="active" data-filter="all">الكل</button>
+          <button data-filter="classic">كلاسيكية</button>
+          <button data-filter="sport">رياضية</button>
+          <button data-filter="limited">إصدار محدود</button>
+        </div>
+        <span id="resultCount">3 ساعات</span>
+      </div>
+
+      <div class="products" id="productsGrid"></div>
+      <div class="empty-state" id="emptyState" hidden>لم نجد ساعة بهذا الاسم. جرّب كلمة أخرى.</div>
+    </section>
+
+    <section class="banner reveal">
+      <div><span class="eyebrow">LUXORA PRIVATE EDITION</span><h2>تفاصيل تُكتشف<br><em>مع كل نظرة.</em></h2></div>
+      <button class="primary" id="bannerBtn">شاهد المجموعة</button>
+    </section>
+
+    <section class="story" id="story">
+      <div><div class="eyebrow">THE LUXORA IDEA</div><h2>قطعة زمنية<br><em>مصنوعة لتُرى.</em></h2></div>
+      <div class="story-copy"><p>نمزج بين الهندسة الدقيقة والتصميم المعاصر لنصنع ساعة تشعر بأنها قطعة فنية قبل أن تكون إكسسوارًا.</p><div class="stats"><div><strong>12</strong><span>شهراً من التطوير</span></div><div><strong>316L</strong><span>فولاذ مقاوم</span></div><div><strong>1Y</strong><span>ضمان</span></div></div></div>
+    </section>
+
+    <section class="newsletter" id="contact">
+      <div><div class="eyebrow">JOIN LUXORA</div><h2>كن أول من يعرف.</h2><p>عروض خاصة وإصدارات محدودة، بدون إزعاج.</p></div>
+      <form id="newsletterForm"><input type="email" id="emailInput" placeholder="بريدك الإلكتروني" required><button class="primary">اشتراك</button></form>
+    </section>
+
+    <footer>
+      <div class="brand">LUXORA<span>®</span></div>
+      <div>© 2026 LUXORA. جميع الحقوق محفوظة.</div>
+      <div class="footer-links"><a href="#collection">المجموعة</a><a href="#story">قصتنا</a><a href="#contact">تواصل</a><a class="admin-link" href="admin.html">لوحة التحكم</a></div>
+    </footer>
+  </main>
+
+  <aside class="cart-drawer" id="cartDrawer" aria-hidden="true">
+    <div class="drawer-head"><div><span class="eyebrow">YOUR BAG</span><h3>سلة المشتريات</h3></div><button id="closeCart" class="close-btn">×</button></div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="cart-empty" id="cartEmpty"><div class="empty-icon">◌</div><p>السلة فارغة</p><span>أضف ساعة لتبدأ مجموعتك.</span></div>
+    <div class="drawer-foot"><div class="total"><span>الإجمالي</span><strong id="cartTotal">0 دج</strong></div><button class="checkout" id="checkoutBtn">إتمام الطلب <span>←</span></button><small>الدفع عند الاستلام متاح</small></div>
+  </aside>
+  <div class="overlay" id="overlay"></div>
+
+  <div class="product-modal" id="productModal" aria-hidden="true">
+    <div class="modal-card"><button class="close-btn" id="closeModal">×</button><div id="modalVisual" class="modal-visual"></div><div class="modal-info"><span class="eyebrow" id="modalCategory"></span><h2 id="modalName"></h2><p id="modalDesc"></p><strong id="modalPrice"></strong><button class="primary full" id="modalAdd">أضف للسلة</button></div></div>
+  </div>
+
+  <div class="checkout-modal" id="checkoutModal" aria-hidden="true">
+    <div class="checkout-card">
+      <button class="close-btn" id="closeCheckout">×</button>
+      <div class="checkout-head"><span class="eyebrow">LUXORA CHECKOUT</span><h2>تأكيد الطلب</h2><p>أدخل بيانات التوصيل، ثم أرسل الطلب مباشرة عبر WhatsApp.</p></div>
+      <form id="checkoutForm" class="checkout-form">
+        <div class="form-grid">
+          <label>الاسم الكامل<input id="customerName" name="name" type="text" placeholder="مثال: محمد أحمد" required></label>
+          <label>رقم الهاتف<input id="customerPhone" name="phone" type="tel" placeholder="06xxxxxxxx" required></label>
+          <label>الولاية<input id="customerWilaya" name="wilaya" type="text" placeholder="مثال: تلمسان" required></label>
+          <label>العنوان<input id="customerAddress" name="address" type="text" placeholder="الحي، الشارع، رقم المنزل" required></label>
+        </div>
+        <label>ملاحظات إضافية<textarea id="customerNotes" name="notes" rows="3" placeholder="مثال: اتصل بي قبل التوصيل"></textarea></label>
+        <div class="checkout-summary" id="checkoutSummary"></div>
+        <div class="checkout-method"><span>طريقة الدفع</span><strong>الدفع عند الاستلام</strong></div>
+        <button class="checkout-whatsapp" type="submit">إرسال الطلب عبر WhatsApp <span>↗</span></button>
+        <small class="checkout-note">سيتم فتح WhatsApp برسالة جاهزة تحتوي على تفاصيل طلبك.</small>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
