@@ -49,24 +49,24 @@ const DEFAULT_PRODUCTS=[
 {id:4,name:'LUXORA Chrono',price:28900,category:'sport',label:'رياضية',desc:'طابع رياضي فاخر وهيكل قوي مستوحى من ساعات الأداء العالي.',badge:'SPORT',image:'',stock:6},
 {id:5,name:'LUXORA Eclipse',price:23900,category:'classic',label:'كلاسيكية',desc:'تصميم أسود بالكامل بلمسة معدنية خافتة، مثالية للمناسبات المسائية.',badge:'',image:'',stock:9},
 {id:6,name:'LUXORA Titan',price:32900,category:'sport',label:'رياضية',desc:'هيكل قوي وتفاصيل حادة لعشاق الساعات ذات الشخصية الواضحة.',badge:'PREMIUM',image:'',stock:5}];
-const supabase = window.supabase.createClient(window.LUXORA_SUPABASE_URL,window.LUXORA_SUPABASE_PUBLISHABLE_KEY);
+const luxoraClient = window.supabase.createClient(window.LUXORA_SUPABASE_URL,window.LUXORA_SUPABASE_PUBLISHABLE_KEY);
 let products=[];let editId=null;let pendingImage='';let pendingFile=null;const $=s=>document.querySelector(s);const labels={classic:'كلاسيكية',sport:'رياضية',limited:'إصدار محدود'};
 function money(n){return new Intl.NumberFormat('ar-DZ').format(n)+' دج'}
 function toast(t){const x=$('#toast');if(!x){console.error(t);return}x.textContent=t;x.classList.add('show');clearTimeout(window.tt);window.tt=setTimeout(()=>x.classList.remove('show'),3200)}
 function normalize(p){return {id:Number(p.id),name:p.name,price:Number(p.price||0),category:p.category||'classic',label:labels[p.category]||p.category,desc:p.description||'',badge:p.badge||'',image:p.image_url||'',stock:Number(p.stock||0)}}
 function publicImage(path){return path ? (path.startsWith('http') ? path : supabase.storage.from('product-images').getPublicUrl(path).data.publicUrl) : ''}
-async function load(){const {data,error}=await supabase.from('products').select('*').order('id');if(error){toast('تعذر تحميل المنتجات: '+error.message);return false}products=(data||[]).map(normalize);render();return true}
+async function load(){const {data,error}=await luxoraClient.from('products').select('*').order('id');if(error){toast('تعذر تحميل المنتجات: '+error.message);return false}products=(data||[]).map(normalize);render();return true}
 async function uploadImage(file){if(!file)return pendingImage||'';const ext=(file.name.split('.').pop()||'jpg').toLowerCase();const path=`${crypto.randomUUID()}.${ext}`;const {error}=await supabase.storage.from('product-images').upload(path,file,{upsert:false,contentType:file.type||'image/jpeg'});if(error)throw error;return path}
 function render(){ $('#count').textContent=products.length;$('#totalValue').textContent=money(products.reduce((a,p)=>a+Number(p.price||0),0));$('#empty').hidden=products.length>0;$('#grid').innerHTML=products.map(p=>`<article class="card"><div class="pic">${p.image?`<img src="${publicImage(p.image)}" alt="${p.name}">`:'<div class="fallback">⌚</div>'}</div><div class="info"><h3>${p.name}</h3><div class="meta"><span>${labels[p.category]||p.category}</span><strong>${money(p.price)}</strong></div><div class="meta"><span>المخزون: ${p.stock}</span><span>${p.badge||''}</span></div><div class="card-actions"><button class="btn" data-edit="${p.id}">تعديل</button><button class="btn danger" data-delete="${p.id}">حذف</button></div></div></article>`).join('')}
 function reset(){editId=null;pendingImage='';pendingFile=null;$('#productForm').reset();$('#id').value='';$('#formTitle').textContent='إضافة ساعة جديدة';$('#saveBtn').textContent='حفظ الساعة';$('#cancelBtn').hidden=true;$('#preview').innerHTML='اختر صورة للساعة'}
 function fill(p){editId=p.id;pendingImage=p.image||'';pendingFile=null;$('#id').value=p.id;$('#name').value=p.name;$('#price').value=p.price;$('#category').value=p.category;$('#badge').value=p.badge||'';$('#desc').value=p.desc||'';$('#stock').value=p.stock||0;$('#imageUrl').value=p.image&&p.image.startsWith('http')?p.image:'';$('#preview').innerHTML=p.image?`<img src="${publicImage(p.image)}" alt="معاينة">`:'لا توجد صورة';$('#formTitle').textContent='تعديل: '+p.name;$('#saveBtn').textContent='حفظ التعديلات';$('#cancelBtn').hidden=false;scrollTo({top:0,behavior:'smooth'})}
 $('#image').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;pendingFile=f;pendingImage='';$('#preview').innerHTML=`<img src="${URL.createObjectURL(f)}" alt="معاينة">`});
 $('#imageUrl').addEventListener('input',e=>{if(e.target.value.trim()){pendingFile=null;pendingImage=e.target.value.trim();$('#preview').innerHTML=`<img src="${pendingImage}" alt="معاينة" onerror="this.parentElement.textContent='تعذر تحميل الصورة'">`}});
-$('#productForm').addEventListener('submit',async e=>{e.preventDefault();const btn=$('#saveBtn');btn.disabled=true;try{let image=pendingImage;if(pendingFile) image=await uploadImage(pendingFile);const payload={name:$('#name').value.trim(),price:Number($('#price').value),category:$('#category').value,description:$('#desc').value.trim(),badge:$('#badge').value.trim(),image_url:image,stock:Number($('#stock').value||0)};if(!payload.name){toast('اكتب اسم الساعة');return}if(editId){const {error}=await supabase.from('products').update(payload).eq('id',editId);if(error)throw error;toast('تم تحديث المنتج على السحابة ✓')}else{const {error}=await supabase.from('products').insert(payload);if(error)throw error;toast('تمت إضافة المنتج إلى السحابة ✓')}await load();reset()}catch(err){console.error(err);toast('حدث خطأ: '+(err.message||err))}finally{btn.disabled=false}});
-$('#cancelBtn').onclick=reset;$('#resetBtn').onclick=reset;$('#grid').addEventListener('click',async e=>{const ed=e.target.closest('[data-edit]'),del=e.target.closest('[data-delete]');if(ed){const p=products.find(x=>x.id===Number(ed.dataset.edit));if(p)fill(p)}if(del){const id=Number(del.dataset.delete);const p=products.find(x=>x.id===id);if(p&&confirm(`حذف ${p.name}؟`)){const {error}=await supabase.from('products').delete().eq('id',id);if(error)toast('تعذر الحذف: '+error.message);else{await load();toast('تم حذف المنتج ✓')}}}});
+$('#productForm').addEventListener('submit',async e=>{e.preventDefault();const btn=$('#saveBtn');btn.disabled=true;try{let image=pendingImage;if(pendingFile) image=await uploadImage(pendingFile);const payload={name:$('#name').value.trim(),price:Number($('#price').value),category:$('#category').value,description:$('#desc').value.trim(),badge:$('#badge').value.trim(),image_url:image,stock:Number($('#stock').value||0)};if(!payload.name){toast('اكتب اسم الساعة');return}if(editId){const {error}=await luxoraClient.from('products').update(payload).eq('id',editId);if(error)throw error;toast('تم تحديث المنتج على السحابة ✓')}else{const {error}=await luxoraClient.from('products').insert(payload);if(error)throw error;toast('تمت إضافة المنتج إلى السحابة ✓')}await load();reset()}catch(err){console.error(err);toast('حدث خطأ: '+(err.message||err))}finally{btn.disabled=false}});
+$('#cancelBtn').onclick=reset;$('#resetBtn').onclick=reset;$('#grid').addEventListener('click',async e=>{const ed=e.target.closest('[data-edit]'),del=e.target.closest('[data-delete]');if(ed){const p=products.find(x=>x.id===Number(ed.dataset.edit));if(p)fill(p)}if(del){const id=Number(del.dataset.delete);const p=products.find(x=>x.id===id);if(p&&confirm(`حذف ${p.name}؟`)){const {error}=await luxoraClient.from('products').delete().eq('id',id);if(error)toast('تعذر الحذف: '+error.message);else{await load();toast('تم حذف المنتج ✓')}}}});
 $('#exportBtn').onclick=()=>{const blob=new Blob([JSON.stringify(products,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='luxora-products.json';a.click();URL.revokeObjectURL(a.href)};
-$('#importFile').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;try{const data=JSON.parse(await f.text());if(!Array.isArray(data))throw new Error('ملف غير صالح');for(const p of data){const payload={name:p.name,price:Number(p.price||0),category:p.category||'classic',description:p.desc||p.description||'',badge:p.badge||'',image_url:p.image||p.image_url||'',stock:Number(p.stock||0)};if(p.id)await supabase.from('products').upsert({...payload,id:Number(p.id)});else await supabase.from('products').insert(payload)}await load();toast('تم استيراد المنتجات إلى السحابة ✓')}catch(err){toast('فشل الاستيراد: '+err.message)}});
-$('#restoreBtn').onclick=async()=>{if(!confirm('إضافة المنتجات الافتراضية إلى قاعدة البيانات؟'))return;try{const {error}=await supabase.from('products').upsert(DEFAULT_PRODUCTS.map(p=>({id:p.id,name:p.name,price:p.price,category:p.category,description:p.desc,badge:p.badge,image_url:p.image,stock:p.stock})));if(error)throw error;await load();toast('تمت استعادة المنتجات ✓')}catch(e){toast('تعذر الاستعادة: '+e.message)}};
+$('#importFile').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;try{const data=JSON.parse(await f.text());if(!Array.isArray(data))throw new Error('ملف غير صالح');for(const p of data){const payload={name:p.name,price:Number(p.price||0),category:p.category||'classic',description:p.desc||p.description||'',badge:p.badge||'',image_url:p.image||p.image_url||'',stock:Number(p.stock||0)};if(p.id)await luxoraClient.from('products').upsert({...payload,id:Number(p.id)});else await luxoraClient.from('products').insert(payload)}await load();toast('تم استيراد المنتجات إلى السحابة ✓')}catch(err){toast('فشل الاستيراد: '+err.message)}});
+$('#restoreBtn').onclick=async()=>{if(!confirm('إضافة المنتجات الافتراضية إلى قاعدة البيانات؟'))return;try{const {error}=await luxoraClient.from('products').upsert(DEFAULT_PRODUCTS.map(p=>({id:p.id,name:p.name,price:p.price,category:p.category,description:p.desc,badge:p.badge,image_url:p.image,stock:p.stock})));if(error)throw error;await load();toast('تمت استعادة المنتجات ✓')}catch(e){toast('تعذر الاستعادة: '+e.message)}};
 // Add stock field dynamically if older markup does not contain it
 const stockField=document.createElement('div');stockField.className='field';stockField.innerHTML='<label>المخزون</label><input id="stock" type="number" min="0" value="0" placeholder="10">';document.querySelector('#category').parentElement.insertAdjacentElement('afterend',stockField);
 
@@ -100,10 +100,10 @@ async function revealAuthenticated(){
 
 async function checkSession(){
   try{
-    const {data,error}=await supabase.auth.getSession();
+    const {data,error}=await luxoraClient.auth.getSession();
     if(error) throw error;
     if(data.session){
-      const {data:userData,error:userError}=await supabase.auth.getUser();
+      const {data:userData,error:userError}=await luxoraClient.auth.getUser();
       if(userError) throw userError;
       if(userData.user){
         await revealAuthenticated();
@@ -131,12 +131,12 @@ loginForm.addEventListener('submit',async e=>{
     const password=$('#loginPassword').value;
     if(!email || !password) throw new Error('أدخل البريد الإلكتروني وكلمة المرور.');
 
-    const {data,error}=await supabase.auth.signInWithPassword({email,password});
+    const {data,error}=await luxoraClient.auth.signInWithPassword({email,password});
     if(error) throw error;
     if(!data.session) throw new Error('تم قبول الطلب لكن لم يتم إنشاء جلسة دخول.');
 
     // Verify the authenticated user before revealing the dashboard.
-    const {data:userData,error:userError}=await supabase.auth.getUser();
+    const {data:userData,error:userError}=await luxoraClient.auth.getUser();
     if(userError) throw userError;
     if(!userData.user) throw new Error('لم يتم العثور على المستخدم بعد تسجيل الدخول.');
 
@@ -158,7 +158,7 @@ loginForm.addEventListener('submit',async e=>{
 });
 
 logoutBtn.addEventListener('click',async()=>{
-  const {error}=await supabase.auth.signOut();
+  const {error}=await luxoraClient.auth.signOut();
   if(error){showLoginError('تعذر تسجيل الخروج: '+error.message);return;}
   setAuthenticated(false);
   clearLoginError();
@@ -171,14 +171,14 @@ $('#resetPasswordBtn').addEventListener('click',async()=>{
   const email=$('#loginEmail').value.trim();
   if(!email){showLoginError('اكتب بريد حساب المدير أولًا ثم اضغط «نسيت كلمة المرور؟».');return}
   try{
-    const {error}=await supabase.auth.resetPasswordForEmail(email,{redirectTo:window.location.href});
+    const {error}=await luxoraClient.auth.resetPasswordForEmail(email,{redirectTo:window.location.href});
     if(error) throw error;
     toast('تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك ✓');
   }catch(err){showLoginError('تعذر إرسال رابط إعادة التعيين: '+(err.message||err))}
 });
 
 // Keep the UI in sync with Supabase Auth events. Do not call Supabase methods inside this callback.
-supabase.auth.onAuthStateChange((event,session)=>{
+luxoraClient.auth.onAuthStateChange((event,session)=>{
   if(event==='SIGNED_OUT') setAuthenticated(false);
   else if(session && (event==='SIGNED_IN'||event==='INITIAL_SESSION'||event==='TOKEN_REFRESHED')) setAuthenticated(true);
 });
