@@ -6,16 +6,22 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#080808;--panel:#111;--line:rgba(255,255,255,.1);--text:#f4f1eb;--muted:#999;--gold:#d9b66f}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 80% 0%,#1a1510 0,#080808 38%);color:var(--text);font-family:Cairo,Arial,sans-serif}button,input,textarea,select{font:inherit}button{cursor:pointer}.wrap{max-width:1200px;margin:auto;padding:30px 20px 60px}.top{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:28px}.brand{font:700 32px 'Playfair Display',serif;letter-spacing:4px}.brand span{color:var(--gold)}.top a{color:#ddd;text-decoration:none}.hero{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:25px}.hero h1{font-size:34px;margin:0 0 6px}.hero p{color:var(--muted);margin:0}.stats{display:flex;gap:12px}.stat{background:#111;border:1px solid var(--line);border-radius:16px;padding:14px 18px;min-width:120px}.stat b{display:block;font-size:22px}.stat span{font-size:12px;color:var(--muted)}.panel{background:rgba(17,17,17,.92);border:1px solid var(--line);border-radius:22px;padding:22px;margin-bottom:22px;box-shadow:0 20px 60px rgba(0,0,0,.25)}.panel h2{margin:0 0 18px;font-size:20px}.form{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.field{display:flex;flex-direction:column;gap:7px}.field.full{grid-column:1/-1}.field label{font-size:13px;color:#ccc}.field input,.field textarea,.field select{background:#090909;color:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 13px;outline:none}.field input:focus,.field textarea:focus,.field select:focus{border-color:rgba(217,182,111,.65)}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}.btn{border:1px solid var(--line);background:#191919;color:#fff;border-radius:12px;padding:11px 16px}.btn.primary{background:linear-gradient(135deg,#f0d38e,#b68a3e);color:#111;border:0;font-weight:800}.btn.danger{color:#ffb1b1}.preview{height:150px;border:1px dashed var(--line);border-radius:14px;display:grid;place-items:center;overflow:hidden;background:#0a0a0a}.preview img{max-width:100%;max-height:100%;object-fit:contain}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.card{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:#0c0c0c}.pic{height:210px;display:grid;place-items:center;background:radial-gradient(circle,#222,#0b0b0b)}.pic img{width:100%;height:100%;object-fit:contain}.pic .fallback{font-size:50px;opacity:.4}.info{padding:15px}.info h3{margin:0 0 5px}.meta{font-size:12px;color:var(--muted);display:flex;justify-content:space-between;gap:8px}.card-actions{display:flex;gap:8px;margin-top:12px}.card-actions .btn{flex:1;padding:9px 8px;font-size:12px}.empty{text-align:center;color:var(--muted);padding:30px}.note{color:var(--muted);font-size:12px;margin-top:10px}#appContent{display:none}.authenticated #appContent{display:block}.authenticated #loginPanel{display:none}.toast{position:fixed;bottom:25px;left:50%;transform:translateX(-50%) translateY(20px);background:#eee;color:#111;padding:11px 18px;border-radius:999px;opacity:0;pointer-events:none;transition:.25s}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}@media(max-width:800px){.hero{align-items:start;flex-direction:column}.stats{width:100%}.stat{flex:1}.form{grid-template-columns:1fr}.field.full{grid-column:auto}.grid{grid-template-columns:1fr}.top{align-items:flex-start}}
+:root{--bg:#080808;--panel:#111;--line:rgba(255,255,255,.1);--text:#f4f1eb;--muted:#999;--gold:#d9b66f}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 80% 0%,#1a1510 0,#080808 38%);color:var(--text);font-family:Cairo,Arial,sans-serif}button,input,textarea,select{font:inherit}button{cursor:pointer}.wrap{max-width:1200px;margin:auto;padding:30px 20px 60px}.top{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:28px}.brand{font:700 32px 'Playfair Display',serif;letter-spacing:4px}.brand span{color:var(--gold)}.top a{color:#ddd;text-decoration:none}.hero{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:25px}.hero h1{font-size:34px;margin:0 0 6px}.hero p{color:var(--muted);margin:0}.stats{display:flex;gap:12px}.stat{background:#111;border:1px solid var(--line);border-radius:16px;padding:14px 18px;min-width:120px}.stat b{display:block;font-size:22px}.stat span{font-size:12px;color:var(--muted)}.panel{background:rgba(17,17,17,.92);border:1px solid var(--line);border-radius:22px;padding:22px;margin-bottom:22px;box-shadow:0 20px 60px rgba(0,0,0,.25)}.panel h2{margin:0 0 18px;font-size:20px}.form{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.field{display:flex;flex-direction:column;gap:7px}.field.full{grid-column:1/-1}.field label{font-size:13px;color:#ccc}.field input,.field textarea,.field select{background:#090909;color:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 13px;outline:none}.field input:focus,.field textarea:focus,.field select:focus{border-color:rgba(217,182,111,.65)}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}.btn{border:1px solid var(--line);background:#191919;color:#fff;border-radius:12px;padding:11px 16px}.btn.primary{background:linear-gradient(135deg,#f0d38e,#b68a3e);color:#111;border:0;font-weight:800}.btn.danger{color:#ffb1b1}.preview{height:150px;border:1px dashed var(--line);border-radius:14px;display:grid;place-items:center;overflow:hidden;background:#0a0a0a}.preview img{max-width:100%;max-height:100%;object-fit:contain}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.card{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:#0c0c0c}.pic{height:210px;display:grid;place-items:center;background:radial-gradient(circle,#222,#0b0b0b)}.pic img{width:100%;height:100%;object-fit:contain}.pic .fallback{font-size:50px;opacity:.4}.info{padding:15px}.info h3{margin:0 0 5px}.meta{font-size:12px;color:var(--muted);display:flex;justify-content:space-between;gap:8px}.card-actions{display:flex;gap:8px;margin-top:12px}.card-actions .btn{flex:1;padding:9px 8px;font-size:12px}.empty{text-align:center;color:var(--muted);padding:30px}.note{color:var(--muted);font-size:12px;margin-top:10px}#appContent{display:none}.authenticated #appContent{display:block}.authenticated #loginPanel{display:none}.toast{position:fixed;bottom:25px;left:50%;transform:translateX(-50%) translateY(20px);background:#eee;color:#111;padding:11px 18px;border-radius:999px;opacity:0;pointer-events:none;transition:.25s}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}.hidden{display:none!important}.auth-status{margin-top:12px;padding:10px 12px;border-radius:10px;background:#0d0d0d;border:1px solid var(--line);color:#cfcfcf;font-size:13px}@media(max-width:800px){.hero{align-items:start;flex-direction:column}.stats{width:100%}.stat{flex:1}.form{grid-template-columns:1fr}.field.full{grid-column:auto}.grid{grid-template-columns:1fr}.top{align-items:flex-start}}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="supabase-config.js"></script>
 </head>
 <body>
 <div class="wrap">
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
 <section class="panel" id="loginPanel" style="max-width:560px;margin:40px auto">
-<h2>دخول مدير LUXORA</h2><p class="note">استخدم حساب المدير الذي أنشأته في Supabase Authentication.</p>
-<form id="loginForm" class="form"><div class="field full"><label>البريد الإلكتروني</label><input id="loginEmail" type="email" required placeholder="admin@example.com"></div><div class="field full"><label>كلمة المرور</label><input id="loginPassword" type="password" required placeholder="••••••••"></div><div class="actions"><button class="btn primary" type="submit">تسجيل الدخول</button></div></form></section>
-<header class="top"><div class="brand">LUXORA<span>®</span></div><a href="index.html">← العودة إلى المتجر</a></header><div id="appContent">
+<h2>دخول مدير LUXORA</h2><p class="note">استخدم البريد وكلمة المرور لحساب المدير الذي أنشأته في Supabase Authentication.</p>
+<form id="loginForm" class="form">
+<div class="field full"><label>البريد الإلكتروني</label><input id="loginEmail" type="email" autocomplete="email" required placeholder="البريد الذي أنشأته في Supabase"></div>
+<div class="field full"><label>كلمة المرور</label><input id="loginPassword" type="password" autocomplete="current-password" required placeholder="كلمة مرور حساب Supabase"></div>
+<div class="actions"><button class="btn primary" id="loginBtn" type="submit">تسجيل الدخول</button><button class="btn" id="resetPasswordBtn" type="button">نسيت كلمة المرور؟</button></div>
+<p id="loginError" class="note" style="color:#ffb1b1;display:none"></p><div id="authStatus" class="auth-status">جارٍ التحقق من جلسة الدخول…</div>
+</form></section>
+<div id="appContent"><header class="top"><div class="brand">LUXORA<span>®</span></div><div class="actions" style="margin:0"><button class="btn" id="logoutBtn" type="button">تسجيل الخروج</button><a href="index.html">← العودة إلى المتجر</a></div></header>
 <section class="hero"><div><h1>لوحة تحكم LUXORA</h1><p>أضف الساعات، غيّر الأسعار والصور والوصف، وكل شيء ينعكس على المتجر فورًا.</p></div><div class="stats"><div class="stat"><b id="count">0</b><span>منتجات</span></div><div class="stat"><b id="totalValue">0</b><span>قيمة المنتجات</span></div></div></section>
 <section class="panel">
 <h2 id="formTitle">إضافة ساعة جديدة</h2>
@@ -46,7 +52,7 @@ const DEFAULT_PRODUCTS=[
 const supabase = window.supabase.createClient(window.LUXORA_SUPABASE_URL,window.LUXORA_SUPABASE_PUBLISHABLE_KEY);
 let products=[];let editId=null;let pendingImage='';let pendingFile=null;const $=s=>document.querySelector(s);const labels={classic:'كلاسيكية',sport:'رياضية',limited:'إصدار محدود'};
 function money(n){return new Intl.NumberFormat('ar-DZ').format(n)+' دج'}
-function toast(t){const x=$('#toast');x.textContent=t;x.classList.add('show');clearTimeout(window.tt);window.tt=setTimeout(()=>x.classList.remove('show'),2200)}
+function toast(t){const x=$('#toast');if(!x){console.error(t);return}x.textContent=t;x.classList.add('show');clearTimeout(window.tt);window.tt=setTimeout(()=>x.classList.remove('show'),3200)}
 function normalize(p){return {id:Number(p.id),name:p.name,price:Number(p.price||0),category:p.category||'classic',label:labels[p.category]||p.category,desc:p.description||'',badge:p.badge||'',image:p.image_url||'',stock:Number(p.stock||0)}}
 function publicImage(path){return path ? (path.startsWith('http') ? path : supabase.storage.from('product-images').getPublicUrl(path).data.publicUrl) : ''}
 async function load(){const {data,error}=await supabase.from('products').select('*').order('id');if(error){toast('تعذر تحميل المنتجات: '+error.message);return false}products=(data||[]).map(normalize);render();return true}
@@ -65,8 +71,113 @@ $('#restoreBtn').onclick=async()=>{if(!confirm('إضافة المنتجات ال
 const stockField=document.createElement('div');stockField.className='field';stockField.innerHTML='<label>المخزون</label><input id="stock" type="number" min="0" value="0" placeholder="10">';document.querySelector('#category').parentElement.insertAdjacentElement('afterend',stockField);
 
 const loginForm=$('#loginForm');
-async function checkSession(){const {data}=await supabase.auth.getSession();if(data.session){document.body.classList.add('authenticated');await load()}else{document.body.classList.remove('authenticated')}}
-loginForm.addEventListener('submit',async e=>{e.preventDefault();const {error}=await supabase.auth.signInWithPassword({email:$('#loginEmail').value.trim(),password:$('#loginPassword').value});if(error)toast('فشل تسجيل الدخول: '+error.message);else{toast('تم تسجيل الدخول ✓');await checkSession()}});
-supabase.auth.onAuthStateChange((_event,session)=>{if(session)document.body.classList.add('authenticated');else document.body.classList.remove('authenticated')});
+const loginBtn=$('#loginBtn');
+const loginError=$('#loginError');
+const authStatus=$('#authStatus');
+const logoutBtn=$('#logoutBtn');
+
+function showLoginError(message){
+  loginError.textContent=message;
+  loginError.style.display='block';
+  if(authStatus) authStatus.textContent='حالة الدخول: لم يتم تسجيل الدخول.';
+  toast(message);
+}
+function clearLoginError(){loginError.textContent='';loginError.style.display='none'}
+function setAuthenticated(isAuth){
+  document.body.classList.toggle('authenticated',!!isAuth);
+  if(authStatus) authStatus.textContent=isAuth?'تم تسجيل الدخول بنجاح ✓':'لم يتم تسجيل الدخول.';
+}
+
+async function revealAuthenticated(){
+  setAuthenticated(true);
+  try { await load(); }
+  catch(e) { console.error(e); }
+}
+
+async function checkSession(){
+  try{
+    const {data,error}=await supabase.auth.getSession();
+    if(error) throw error;
+    if(data.session){
+      const {data:userData,error:userError}=await supabase.auth.getUser();
+      if(userError) throw userError;
+      if(userData.user){
+        await revealAuthenticated();
+      } else {
+        setAuthenticated(false);
+      }
+    } else {
+      setAuthenticated(false);
+      if(authStatus) authStatus.textContent='لم يتم تسجيل الدخول. أدخل حساب المدير.';
+    }
+  }catch(err){
+    console.error(err);
+    setAuthenticated(false);
+    showLoginError('تعذر التحقق من جلسة Supabase: '+(err.message||err));
+  }
+}
+
+loginForm.addEventListener('submit',async e=>{
+  e.preventDefault();
+  clearLoginError();
+  loginBtn.disabled=true;
+  loginBtn.textContent='جاري الدخول...';
+  try{
+    const email=$('#loginEmail').value.trim();
+    const password=$('#loginPassword').value;
+    if(!email || !password) throw new Error('أدخل البريد الإلكتروني وكلمة المرور.');
+
+    const {data,error}=await supabase.auth.signInWithPassword({email,password});
+    if(error) throw error;
+    if(!data.session) throw new Error('تم قبول الطلب لكن لم يتم إنشاء جلسة دخول.');
+
+    // Verify the authenticated user before revealing the dashboard.
+    const {data:userData,error:userError}=await supabase.auth.getUser();
+    if(userError) throw userError;
+    if(!userData.user) throw new Error('لم يتم العثور على المستخدم بعد تسجيل الدخول.');
+
+    setAuthenticated(true);
+    toast('تم تسجيل الدخول ✓');
+    await load();
+  }catch(err){
+    console.error('LUXORA login error:',err);
+    let msg=err.message||String(err);
+    if(/invalid login credentials/i.test(msg)) msg='البريد الإلكتروني أو كلمة المرور غير صحيحة.';
+    else if(/email not confirmed/i.test(msg)) msg='البريد الإلكتروني غير مؤكد في Supabase.';
+    else if(/failed to fetch|network|fetch/i.test(msg)) msg='تعذر الاتصال بـ Supabase. تحقق من رابط المشروع ومفتاح Publishable.';
+    showLoginError(msg);
+    setAuthenticated(false);
+  }finally{
+    loginBtn.disabled=false;
+    loginBtn.textContent='تسجيل الدخول';
+  }
+});
+
+logoutBtn.addEventListener('click',async()=>{
+  const {error}=await supabase.auth.signOut();
+  if(error){showLoginError('تعذر تسجيل الخروج: '+error.message);return;}
+  setAuthenticated(false);
+  clearLoginError();
+  toast('تم تسجيل الخروج.');
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+
+$('#resetPasswordBtn').addEventListener('click',async()=>{
+  clearLoginError();
+  const email=$('#loginEmail').value.trim();
+  if(!email){showLoginError('اكتب بريد حساب المدير أولًا ثم اضغط «نسيت كلمة المرور؟».');return}
+  try{
+    const {error}=await supabase.auth.resetPasswordForEmail(email,{redirectTo:window.location.href});
+    if(error) throw error;
+    toast('تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك ✓');
+  }catch(err){showLoginError('تعذر إرسال رابط إعادة التعيين: '+(err.message||err))}
+});
+
+// Keep the UI in sync with Supabase Auth events. Do not call Supabase methods inside this callback.
+supabase.auth.onAuthStateChange((event,session)=>{
+  if(event==='SIGNED_OUT') setAuthenticated(false);
+  else if(session && (event==='SIGNED_IN'||event==='INITIAL_SESSION'||event==='TOKEN_REFRESHED')) setAuthenticated(true);
+});
+
 checkSession();
 </script></div></div></body></html>
