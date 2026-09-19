@@ -11,7 +11,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="supabase-config.js"></script>
 </head>
 <body>
-<div class="wrap">
+<div class="wrap"><div style="position:fixed;top:8px;left:10px;font-size:10px;color:#777;z-index:99">LUXORA ADMIN v3</div>
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
 <section class="panel" id="loginPanel" style="max-width:560px;margin:40px auto">
 <h2>دخول مدير LUXORA</h2><p class="note">استخدم البريد وكلمة المرور لحساب المدير الذي أنشأته في Supabase Authentication.</p>
@@ -84,8 +84,12 @@ function showLoginError(message){
 }
 function clearLoginError(){loginError.textContent='';loginError.style.display='none'}
 function setAuthenticated(isAuth){
-  document.body.classList.toggle('authenticated',!!isAuth);
-  if(authStatus) authStatus.textContent=isAuth?'تم تسجيل الدخول بنجاح ✓':'لم يتم تسجيل الدخول.';
+  const ok=!!isAuth;
+  document.body.classList.toggle('authenticated',ok);
+  const login=$('#loginPanel'), app=$('#appContent');
+  if(login) login.style.display=ok?'none':'block';
+  if(app) app.style.display=ok?'block':'none';
+  if(authStatus) authStatus.textContent=ok?'تم تسجيل الدخول بنجاح ✓':'لم يتم تسجيل الدخول.';
 }
 
 async function revealAuthenticated(){
@@ -138,7 +142,7 @@ loginForm.addEventListener('submit',async e=>{
 
     setAuthenticated(true);
     toast('تم تسجيل الدخول ✓');
-    await load();
+    load().catch(err=>showLoginError('تم الدخول، لكن تعذر تحميل المنتجات: '+(err.message||err)));
   }catch(err){
     console.error('LUXORA login error:',err);
     let msg=err.message||String(err);
