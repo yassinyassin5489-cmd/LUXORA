@@ -8,223 +8,149 @@
 <style>
 *{box-sizing:border-box}body{margin:0;background:#090909;color:#eee;font-family:Arial,Tahoma,sans-serif}
 .wrap{max-width:1100px;margin:40px auto;padding:20px}.card{background:#111;border:1px solid #2a2a2a;border-radius:22px;padding:28px;box-shadow:0 20px 60px #0008}
-h1{margin-top:0}.gold{color:#e6bd63}label{display:block;margin:16px 0 7px}input,textarea,select{width:100%;padding:14px;border-radius:12px;border:1px solid #333;background:#090909;color:#fff;font-size:15px}button{border:0;border-radius:12px;padding:13px 20px;cursor:pointer;font-weight:700}.primary{background:#d9ad55;color:#111}.secondary{background:#222;color:#fff}.danger{background:#8e3030;color:#fff}.row{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.msg{margin-top:15px;padding:12px;border-radius:10px;background:#191919}.hidden{display:none!important}.top{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:18px}.product{border:1px solid #292929;border-radius:15px;padding:15px;margin-top:12px;display:flex;justify-content:space-between;gap:15px;align-items:center}.muted{color:#999;font-size:13px}@media(max-width:700px){.row{grid-template-columns:1fr}.top{align-items:flex-start;flex-direction:column}}
+h1{margin-top:0}.gold{color:#e6bd63}label{display:block;margin:16px 0 7px}input,textarea{width:100%;padding:14px;border-radius:12px;border:1px solid #333;background:#090909;color:#fff;font-size:15px}
+input[type=file]{padding:10px}.row{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.primary{background:#d9ad55;color:#111}.secondary{background:#222;color:#fff}.danger{background:#8e3030;color:#fff}
+button{border:0;border-radius:12px;padding:13px 20px;cursor:pointer;font-weight:700}.msg{margin-top:15px;padding:12px;border-radius:10px;background:#191919}.hidden{display:none!important}
+.top{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:18px}.muted{color:#999;font-size:13px}
+.product{border:1px solid #292929;border-radius:15px;padding:15px;margin-top:12px;display:flex;justify-content:space-between;gap:15px;align-items:center}
+.preview{display:none;margin-top:12px;width:180px;height:180px;border-radius:14px;border:1px solid #333;object-fit:contain;background:#050505;padding:6px}
+@media(max-width:700px){.row{grid-template-columns:1fr}.top{align-items:flex-start;flex-direction:column}}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div id="loginCard" class="card">
-    <div class="muted">LUXORA ADMIN FINAL</div>
-    <h1>دخول مدير <span class="gold">LUXORA</span></h1>
-    <p class="muted">استخدم حساب Supabase Authentication الذي أنشأته.</p>
-    <label>البريد الإلكتروني</label>
-    <input id="email" type="email" autocomplete="username" placeholder="بريدك الإلكتروني">
-    <label>كلمة المرور</label>
-    <input id="password" type="password" autocomplete="current-password" placeholder="كلمة مرور حساب Supabase">
-    <div class="actions">
-      <button id="loginBtn" class="primary">تسجيل الدخول</button>
-      <button id="resetBtn" class="secondary">إرسال رابط إعادة تعيين كلمة المرور</button>
-    </div>
-    <div id="loginMsg" class="msg">جاري تهيئة الاتصال...</div>
-  </div>
+<div id="loginCard" class="card">
+<div class="muted">LUXORA ADMIN</div><h1>دخول مدير <span class="gold">LUXORA</span></h1>
+<label>البريد الإلكتروني</label><input id="email" type="email" autocomplete="username">
+<label>كلمة المرور</label><input id="password" type="password" autocomplete="current-password">
+<div class="actions"><button id="loginBtn" class="primary">تسجيل الدخول</button><button id="resetBtn" class="secondary">إعادة تعيين كلمة المرور</button></div>
+<div id="loginMsg" class="msg">جاري التهيئة...</div>
+</div>
 
-  <div id="app" class="hidden">
-    <div class="top">
-      <div>
-        <div class="muted">LUXORA ADMIN FINAL</div>
-        <h1>لوحة التحكم</h1>
-        <div id="userEmail" class="muted"></div>
-      </div>
-      <button id="logoutBtn" class="secondary">تسجيل الخروج</button>
-    </div>
+<div id="app" class="hidden">
+<div class="top"><div><div class="muted">LUXORA ADMIN</div><h1>لوحة التحكم</h1><div id="userEmail" class="muted"></div></div><button id="logoutBtn" class="secondary">تسجيل الخروج</button></div>
 
-    <div class="card">
-      <h2>إضافة / تعديل ساعة</h2>
-      <input id="editId" type="hidden">
-      <div class="row">
-        <div><label>اسم الساعة</label><input id="name" placeholder="اسم الساعة"></div>
-        <div><label>السعر</label><input id="price" type="number" min="0" placeholder="السعر"></div>
-        <div><label>الفئة</label><input id="category" placeholder="رجالي / نسائي / فاخر"></div>
-        <div><label>الشارة</label><input id="badge" placeholder="جديد / الأكثر مبيعًا"></div>
-        <div><label>المخزون</label><input id="stock" type="number" min="0" value="1"></div>
-        <div><label>رابط الصورة</label><input id="image_url" placeholder="https://..."></div>
-      </div>
-      <label>الوصف</label><textarea id="description" rows="4" placeholder="وصف الساعة"></textarea>
-      <div class="actions">
-        <button id="saveBtn" class="primary">حفظ في Supabase</button>
-        <button id="clearBtn" class="secondary">مسح النموذج</button>
-      </div>
-      <div id="appMsg" class="msg"></div>
-    </div>
+<div class="card">
+<h2>إضافة / تعديل ساعة</h2>
+<input id="editId" type="hidden">
+<div class="row">
+<div><label>اسم الساعة</label><input id="name" placeholder="مثال: LUXORA Classic"></div>
+<div><label>السعر</label><input id="price" type="number" min="0"></div>
+<div><label>الفئة</label><input id="category" placeholder="classic / sport / limited"></div>
+<div><label>الشارة</label><input id="badge" placeholder="جديد / الأكثر مبيعًا"></div>
+<div><label>المخزون</label><input id="stock" type="number" min="0" value="1"></div>
+</div>
 
-    <div class="card" style="margin-top:20px">
-      <div class="top"><h2>المنتجات</h2><button id="refreshBtn" class="secondary">تحديث</button></div>
-      <div id="products"></div>
-    </div>
-  </div>
+<label>📷 صورة الساعة</label>
+<input id="image_file" type="file" accept="image/jpeg,image/png,image/webp,image/avif">
+<img id="image_preview" class="preview" alt="معاينة">
+<div class="muted">اختر صورة من الكمبيوتر. سيتم رفعها تلقائيًا إلى Supabase Storage.</div>
+
+<label>رابط الصورة (اختياري)</label>
+<input id="image_url" placeholder="يمكن تركه فارغًا إذا اخترت صورة">
+<label>الوصف</label><textarea id="description" rows="4"></textarea>
+<div class="actions"><button id="saveBtn" class="primary">حفظ الساعة والصورة</button><button id="clearBtn" class="secondary">مسح</button></div>
+<div id="appMsg" class="msg"></div>
+</div>
+
+<div class="card" style="margin-top:20px"><div class="top"><h2>المنتجات</h2><button id="refreshBtn" class="secondary">تحديث</button></div><div id="products"></div></div>
+</div>
 </div>
 
 <script>
-(() => {
-  const SUPABASE_URL = "https://njuysvxzecgcagqymcxa.supabase.co";
-  const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_NY1cA0NQq48beLQclc_E4g_yVhwvVz8";
+(()=> {
+const URL="https://njuysvxzecgcagqymcxa.supabase.co";
+const KEY="sb_publishable_NY1cA0NQq48beLQclc_E4g_yVhwvVz8";
+const BUCKET="product-images";
+const client=window.supabase.createClient(URL,KEY);
+const $=id=>document.getElementById(id);
+const loginCard=$("loginCard"),app=$("app"),loginMsg=$("loginMsg"),appMsg=$("appMsg");
 
-  const loginCard = document.getElementById("loginCard");
-  const app = document.getElementById("app");
-  const loginMsg = document.getElementById("loginMsg");
-  const appMsg = document.getElementById("appMsg");
+function message(el,t,e=false){el.textContent=t;el.style.border=e?"1px solid #8e3030":"1px solid #333"}
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 
-  // مهم: لا نستخدم متغيرًا اسمه supabase حتى لا يحدث تعارض مع مكتبة Supabase.
-  const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+async function session(){
+const {data,error}=await client.auth.getSession();
+if(error)return message(loginMsg,error.message,true);
+if(data.session){loginCard.classList.add("hidden");app.classList.remove("hidden");$("userEmail").textContent=data.session.user.email||"";await load();return}
+loginCard.classList.remove("hidden");app.classList.add("hidden");message(loginMsg,"أدخل بيانات حسابك.");
+}
 
-  function msg(el, text, error=false) {
-    el.textContent = text;
-    el.style.border = error ? "1px solid #7d3030" : "1px solid #333";
-  }
+$("loginBtn").onclick=async()=>{
+message(loginMsg,"جاري تسجيل الدخول...");
+const {error}=await client.auth.signInWithPassword({email:$("email").value.trim(),password:$("password").value});
+if(error)return message(loginMsg,"فشل الدخول: "+error.message,true);
+await session();
+};
+$("resetBtn").onclick=async()=>{
+const email=$("email").value.trim();if(!email)return message(loginMsg,"اكتب البريد الإلكتروني أولًا.",true);
+const {error}=await client.auth.resetPasswordForEmail(email,{redirectTo:location.href});
+if(error)return message(loginMsg,error.message,true);message(loginMsg,"تم إرسال رابط إعادة التعيين.");
+};
+$("logoutBtn").onclick=async()=>{await client.auth.signOut();location.reload()};
+client.auth.onAuthStateChange((e,s)=>{if(s){loginCard.classList.add("hidden");app.classList.remove("hidden");$("userEmail").textContent=s.user.email||""}});
 
-  async function showSession() {
-    try {
-      const { data, error } = await client.auth.getSession();
-      if (error) throw error;
-      if (data.session && data.session.user) {
-        loginCard.classList.add("hidden");
-        app.classList.remove("hidden");
-        document.getElementById("userEmail").textContent = data.session.user.email || "";
-        await loadProducts();
-        return true;
-      }
-      loginCard.classList.remove("hidden");
-      app.classList.add("hidden");
-      msg(loginMsg, "أدخل بيانات حساب Supabase.");
-      return false;
-    } catch (e) {
-      msg(loginMsg, "خطأ في فحص الجلسة: " + (e.message || e), true);
-      return false;
-    }
-  }
+$("image_file").onchange=()=>{
+const f=$("image_file").files[0];if(!f){$("image_preview").style.display="none";return}
+$("image_preview").src=URL.createObjectURL(f);$("image_preview").style.display="block";
+};
 
-  client.auth.onAuthStateChange(async (event, session) => {
-    if (session && session.user) {
-      loginCard.classList.add("hidden");
-      app.classList.remove("hidden");
-      document.getElementById("userEmail").textContent = session.user.email || "";
-      if (event === "SIGNED_IN") await loadProducts();
-    } else {
-      loginCard.classList.remove("hidden");
-      app.classList.add("hidden");
-    }
-  });
+async function upload(){
+const f=$("image_file").files[0];
+if(!f)return $("image_url").value.trim();
+if(f.size>5*1024*1024)throw Error("حجم الصورة أكبر من 5MB.");
+if(!f.type.startsWith("image/"))throw Error("اختر ملف صورة.");
+const ext=(f.name.split(".").pop()||"jpg").toLowerCase().replace(/[^a-z0-9]/g,"");
+const path="products/"+Date.now()+"-"+Math.random().toString(36).slice(2,9)+"."+ext;
+const {error}=await client.storage.from(BUCKET).upload(path,f,{contentType:f.type,cacheControl:"3600",upsert:false});
+if(error)throw error;
+return client.storage.from(BUCKET).getPublicUrl(path).data.publicUrl;
+}
 
-  document.getElementById("loginBtn").onclick = async () => {
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value;
-    if (!email || !password) return msg(loginMsg, "أدخل البريد وكلمة المرور.", true);
-    msg(loginMsg, "جاري تسجيل الدخول...");
-    const { data, error } = await client.auth.signInWithPassword({ email, password });
-    if (error) return msg(loginMsg, "فشل تسجيل الدخول: " + error.message, true);
-    if (!data.session) return msg(loginMsg, "تمت المصادقة لكن لم تُنشأ جلسة. تحقق من إعدادات Supabase.", true);
-    msg(loginMsg, "تم تسجيل الدخول بنجاح.");
-    await showSession();
-  };
+function payload(url){
+return {name:$("name").value.trim(),price:Number($("price").value||0),category:$("category").value.trim()||"classic",badge:$("badge").value.trim(),stock:Number($("stock").value||0),image_url:url,description:$("description").value.trim()};
+}
 
-  document.getElementById("resetBtn").onclick = async () => {
-    const email = document.getElementById("email").value.trim();
-    if (!email) return msg(loginMsg, "اكتب البريد الإلكتروني أولًا.", true);
-    const redirectTo = location.origin + location.pathname;
-    const { error } = await client.auth.resetPasswordForEmail(email, { redirectTo });
-    if (error) return msg(loginMsg, "فشل إرسال رابط إعادة التعيين: " + error.message, true);
-    msg(loginMsg, "تم إرسال رابط إعادة تعيين كلمة المرور إلى البريد.");
-  };
+$("saveBtn").onclick=async()=>{
+if(!$("name").value.trim())return message(appMsg,"اكتب اسم الساعة.",true);
+$("saveBtn").disabled=true;message(appMsg,"جاري رفع الصورة وحفظ الساعة...");
+try{
+const url=await upload();const p=payload(url);const id=$("editId").value;
+const r=id?await client.from("products").update(p).eq("id",id):await client.from("products").insert(p);
+if(r.error)throw r.error;
+message(appMsg,"✅ تم حفظ الساعة والصورة بنجاح.");
+clear();await load();
+}catch(e){message(appMsg,"❌ "+(e.message||e),true)}
+$("saveBtn").disabled=false;
+};
 
-  document.getElementById("logoutBtn").onclick = async () => {
-    await client.auth.signOut();
-    location.reload();
-  };
+function clear(){
+["editId","name","price","category","badge","image_url","description"].forEach(x=>$(x).value="");
+$("stock").value="1";$("image_file").value="";$("image_preview").style.display="none";
+}
+$("clearBtn").onclick=clear;
 
-  function formData() {
-    return {
-      name: document.getElementById("name").value.trim(),
-      price: Number(document.getElementById("price").value || 0),
-      category: document.getElementById("category").value.trim(),
-      badge: document.getElementById("badge").value.trim(),
-      stock: Number(document.getElementById("stock").value || 0),
-      image_url: document.getElementById("image_url").value.trim(),
-      description: document.getElementById("description").value.trim()
-    };
-  }
+window.editProduct=p=>{
+$("editId").value=p.id||"";$("name").value=p.name||"";$("price").value=p.price??"";$("category").value=p.category||"";
+$("badge").value=p.badge||"";$("stock").value=p.stock??0;$("image_url").value=p.image_url||"";$("description").value=p.description||"";
+scrollTo({top:0,behavior:"smooth"});
+};
 
-  document.getElementById("saveBtn").onclick = async () => {
-    const id = document.getElementById("editId").value;
-    const payload = formData();
-    if (!payload.name) return msg(appMsg, "اكتب اسم الساعة.", true);
-    msg(appMsg, "جاري الحفظ...");
-    const result = id
-      ? await client.from("products").update(payload).eq("id", id)
-      : await client.from("products").insert(payload);
-    if (result.error) return msg(appMsg, "خطأ في الحفظ: " + result.error.message, true);
-    msg(appMsg, "تم الحفظ بنجاح.");
-    clearForm();
-    await loadProducts();
-  };
+window.deleteProduct=async id=>{
+if(!confirm("هل تريد حذف الساعة؟"))return;
+const {error}=await client.from("products").delete().eq("id",id);
+if(error)return message(appMsg,error.message,true);await load();
+};
 
-  function clearForm() {
-    ["editId","name","price","category","badge","image_url","description"].forEach(id => document.getElementById(id).value = "");
-    document.getElementById("stock").value = "1";
-  }
-  document.getElementById("clearBtn").onclick = clearForm;
-  document.getElementById("refreshBtn").onclick = loadProducts;
-
-  window.editProduct = (p) => {
-    document.getElementById("editId").value = p.id || "";
-    document.getElementById("name").value = p.name || "";
-    document.getElementById("price").value = p.price ?? "";
-    document.getElementById("category").value = p.category || "";
-    document.getElementById("badge").value = p.badge || "";
-    document.getElementById("stock").value = p.stock ?? 0;
-    document.getElementById("image_url").value = p.image_url || "";
-    document.getElementById("description").value = p.description || "";
-    window.scrollTo({top:0, behavior:"smooth"});
-  };
-
-  window.deleteProduct = async (id) => {
-    if (!confirm("هل تريد حذف هذه الساعة؟")) return;
-    const { error } = await client.from("products").delete().eq("id", id);
-    if (error) return msg(appMsg, "خطأ في الحذف: " + error.message, true);
-    msg(appMsg, "تم الحذف.");
-    await loadProducts();
-  };
-
-  async function loadProducts() {
-    const box = document.getElementById("products");
-    box.innerHTML = "جاري تحميل المنتجات...";
-    const { data, error } = await client.from("products").select("*").order("created_at", {ascending:false});
-    if (error) {
-      box.innerHTML = "";
-      return msg(appMsg, "خطأ في قراءة المنتجات: " + error.message, true);
-    }
-    if (!data || !data.length) {
-      box.innerHTML = '<div class="muted">لا توجد منتجات بعد.</div>';
-      return;
-    }
-    box.innerHTML = data.map(p => `
-      <div class="product">
-        <div>
-          <strong>${escapeHtml(p.name || "بدون اسم")}</strong>
-          <div class="muted">${Number(p.price || 0).toLocaleString("ar-DZ")} دج — المخزون: ${p.stock ?? 0}</div>
-        </div>
-        <div class="actions">
-          <button class="secondary" onclick='editProduct(${JSON.stringify(p).replace(/'/g,"&#39;")})'>تعديل</button>
-          <button class="danger" onclick="deleteProduct('${String(p.id).replace(/'/g,"\\'")}')">حذف</button>
-        </div>
-      </div>`).join("");
-  }
-
-  function escapeHtml(s) {
-    return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
-  }
-
-  showSession();
+async function load(){
+const box=$("products");box.textContent="جاري تحميل المنتجات...";
+const {data,error}=await client.from("products").select("*").order("created_at",{ascending:false});
+if(error){box.textContent="";return message(appMsg,"خطأ: "+error.message,true)}
+if(!data?.length){box.innerHTML='<div class="muted">لا توجد ساعات بعد.</div>';return}
+box.innerHTML=data.map(p=>`<div class="product"><div><strong>${esc(p.name)}</strong><div class="muted">${Number(p.price||0).toLocaleString("ar-DZ")} دج — المخزون: ${p.stock??0}</div><div class="muted">${p.image_url?"✓ الصورة محفوظة":"⚠ بدون صورة"}</div></div><div class="actions"><button class="secondary" onclick='editProduct(${JSON.stringify(p).replace(/'/g,"&#39;")})'>تعديل</button><button class="danger" onclick="deleteProduct('${String(p.id).replace(/'/g,"\\\\'")}')">حذف</button></div></div>`).join("");
+}
+$("refreshBtn").onclick=load;session();
 })();
 </script>
-</body>
-</html>
+</body></html>
